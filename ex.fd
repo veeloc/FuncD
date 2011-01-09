@@ -1,0 +1,56 @@
+new main:
+goToMiddle
+500[flower]
+;
+new magic:
+move > 50
+turn > 120
+move > 50
+turn > 120
+move > 50
+turn > 60
+move > 50
+turn > 120
+move > 50
+turn > 120
+move > 100
+turn > 60
+move > 100
+turn > 120
+move > 100
+turn > 120
+move > 100
+turn > 90
+;
+
+new goToMiddle:
+penUp
+turn>90
+move>250
+turn>90
+move>250
+penDown
+;
+
+new tam:
+turn>90
+move>100
+;
+
+new flower:
+square
+turn > .6
+;
+
+new square:
+move > 10
+turn > 20
+;
+
+new dash:
+random
+move>10
+penUp
+move>10
+penDown
+;
