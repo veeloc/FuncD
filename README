@@ -44,11 +44,14 @@ To write scripts, save your file as .fd and follow these rules:
 	move > 20 (moves 20 forward)
 	2[turn > 90] (turns +90 degrees, twice)
 	move > 120 (moves 120 forward)
+	; // Finish the block with a semi-colon
 3. Call other functions defined (anywhere) in the script from any other function, or from the FDI prompt (after a file has been read in successfully):
 	blockName (calls blockName once)
 	10[blockName] (calls blockName 10 times)
 4. ????
 5. Profit
+
+An example program is included, ex.fd
 
 Hopefully support will be added for defining arguments to your own functions, calling multiple commands within a loop block, and adding more default functions.
 
