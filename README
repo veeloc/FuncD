@@ -1,0 +1,55 @@
+FuncD
+Copyright VelocityApps, Inc. 2011
+January 9th, 2011
+
+FuncD, Functional Drawing, is a programming language that was made to be a modern approach to the LOGO language.
+
+(The original specification for FuncD was considered and written in August, and can be found here (out of date): http://pastie.org/1123593).
+
+I chose to write FuncD in Python as a introductory project for myself, and threw the groundwork together over a Saturday afternoon.
+
+Looking at the source, you can see that there are 4 main components:
+	- FuncDriver: The program that you run to select options.
+	- FuncDInterpreter: The program that parsing scripts as well as single commands.
+	- GraphicsController: A class that handles drawing and controls the pygame window.
+	- FuncData: A class that holds the default function definitions and contains functions parsed from scripts.
+
+~~ How to use FuncD ~~
+1. Install the pygame module
+2. Run FuncDriver.py
+	Arguments, choose one:
+		- i, run the interpreter
+		- t, display parse times
+3. Choose an option:
+	- load <file> (must be complete path, or in same directory)
+	- fdi, starts the interpreter
+
+4. After running a file, you can enter single commands through the FDI >> prompt
+
+~~ How to write scripts ~~
+There are currently only a few functions supported that provide the building blocks for your programs. Hopefully with support from the community, more will be added. The current functions (as defined in FuncData):
+
+	- move > # (move # distance in current direction)
+	- moved > dir > # (move in a direction such as up, down, left, or right for # distance)
+	- penUp (draws while moving)
+	- penDown (does not draw while moving)
+	- random (turns a random amount)
+	- randomd > # (turns a random amount and moves #)
+
+Fucntions to be added would be setting the color, setting the direction, setting the size of the pygame window/background color, making arcs, etc.
+
+To write scripts, save your file as .fd and follow these rules:
+1. Define new blocks with the format, "new <name>:\n"
+2. Add commands seperated by line breaks, such as:
+	move > 20 (moves 20 forward)
+	2[turn > 90] (turns +90 degrees, twice)
+	move > 120 (moves 120 forward)
+3. Call other functions defined (anywhere) in the script from any other function, or from the FDI prompt (after a file has been read in successfully):
+	blockName (calls blockName once)
+	10[blockName] (calls blockName 10 times)
+4. ????
+5. Profit
+
+Hopefully support will be added for defining arguments to your own functions, calling multiple commands within a loop block, and adding more default functions.
+
+FuncD is currently licensed under the GPL.
