@@ -66,22 +66,6 @@ class funcdinterpreter():
 					t = 'T_UNKNOWN'
 			elif x in tokenDict:
 				t = tokenDict[x]
-				'''
-			elif x == '[':
-				t = 'T_OPENBRAK'
-			elif x == ']':
-				t = 'T_CLOSEBRAK'
-			elif x == '(':
-				t = 'T_OPENPAR'
-			elif x == ')':
-				t = 'T_CLOSEPAR'
-			elif x == ';':
-				t = 'T_SEMIC'
-			elif x == ',':
-				t = 'T_COM'
-			elif x == ':':
-				t = 'T_COL'
-				'''
 			elif x == '>':
 				t = 'T_V'
 				if (self.nextCh(inputStr, pos) == '>'):
