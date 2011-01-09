@@ -1,5 +1,5 @@
 #import modules
-import os, sys, time
+import os, sys, time, string
 from FuncData import *
 from GraphicsController import *
 
@@ -15,7 +15,14 @@ class funcdinterpreter():
 		self.gc = graphicscontroller()
 		self.gcStarted = True
 		
-	def tokenize(self, string):
+	def tokenize(self, inputStr):
+		
+		#define tokens dictionary
+		tokenDict = {'[': 'T_OPENBRAK', ']': 'T_CLOSEBRAK',
+	                  '(': 'T_OPENPAR', ')':  'T_CLOSEPAR',
+	                  ';':  'T_SEMIC', ',': 'T_COM',
+						':' : 'T_COL'}
+	
 		if (len(sys.argv) > 1):
 			if (sys.argv[1] == '-t'):
 				t0 = time.time()
@@ -24,45 +31,42 @@ class funcdinterpreter():
 		# Loop over every character and begin to tokenize
 		pos = 0
 		
-		while (pos < len(string)):
+		while (pos < len(inputStr)):
 			
-			x = string[pos]
+			x = inputStr[pos]
 			t = 'T_NULL'
 			
 			# Test for numbers
-			if x == '0' or x == '1' or x == '2'\
-			or x == '3' or x == '4' or x == '5'\
-			or x == '6' or x == '7' or x == '8' or x == '9':
+			if x in string.digits:
 				t = 'T_NUM'
-				next = self.nextCh(string, pos)	
-				if next == '0' or next == '1' or next == '2'\
-				or next == '3' or next == '4' or next == '5'\
-				or next == '6' or next == '7' or next == '8' or next == '9':
+				next = self.nextCh(inputStr, pos)	
+				if next in string.digits:
 					pos += 1
-					temp = string[pos]
-					while temp == '0' or temp == '1' or temp == '2'\
-						or temp == '3' or temp == '4' or temp == '5'\
-						or temp == '6' or temp == '7' or temp == '8' or temp == '9' and pos < len(string):
+					temp = inputStr[pos]
+					while temp in string.digits and pos < len(inputStr):
 						x += temp
 						pos += 1
-						if (pos < len(string)):
-							temp = string[pos]
+						if (pos < len(inputStr)):
+							temp = inputStr[pos]
 						else:
 							break
 					pos -= 1
 						
 			# Test for special characters
 			elif x == '/':
-				if (self.nextCh(string, pos) == '/'):
+				if (self.nextCh(inputStr, pos) == '/'):
 					t = 'T_COMMENT'
 					pos += 1
-					temp = string[pos]
+					temp = inputStr[pos]
 					while temp != '\n':
-						temp = string[pos]
+						temp = inputStr[pos]
 						pos += 1
 						
 				else:
 					t = 'T_UNKNOWN'
+			elif x in tokenDict:
+				t = tokenDict[x]
+				'''
 			elif x == '[':
 				t = 'T_OPENBRAK'
 			elif x == ']':
@@ -77,76 +81,26 @@ class funcdinterpreter():
 				t = 'T_COM'
 			elif x == ':':
 				t = 'T_COL'
+				'''
 			elif x == '>':
 				t = 'T_V'
-				if (self.nextCh(string, pos) == '>'):
+				if (self.nextCh(inputStr, pos) == '>'):
 					t = 'T_VV'
 					pos += 1
-					temp = string[pos]
+					temp = inputStr[pos]
 				
-			elif x == 'a' or x == 'b' or x == 'c'\
-			 or x == 'd' or x == 'e' or x == 'f'\
-			 or x == 'g' or x == 'h' or x == 'i'\
-			 or x == 'j' or x == 'k' or x == 'l'\
-			 or x == 'm' or x == 'n' or x == 'o'\
-			 or x == 'p' or x == 'q' or x == 'r'\
-			 or x == 's' or x == 't' or x == 'u'\
-			 or x == 'v' or x == 'w' or x == 'x'\
-			 or x == 'y' or x == 'z'\
-			 or x == 'A' or x == 'B' or x == 'C'\
-			 or x == 'D' or x == 'E' or x == 'F'\
-			 or x == 'G' or x == 'H' or x == 'I'\
-			 or x == 'J' or x == 'K' or x == 'L'\
-			 or x == 'M' or x == 'N' or x == 'O'\
-			 or x == 'P' or x == 'Q' or x == 'R'\
-			 or x == 'S' or x == 'T' or x == 'U'\
-			 or x == 'V' or x == 'W' or x == 'X'\
-			 or x == 'Y' or x == 'Z':
+			elif x in string.letters:
 				
 				t = 'T_STR'
-				next = self.nextCh(string, pos)
-				if next == 'a' or next == 'b' or next == 'c'\
-				 or next == 'd' or next == 'e' or next == 'f'\
-				 or next == 'g' or next == 'h' or next == 'i'\
-				 or next == 'j' or next == 'k' or next == 'l'\
-				 or next == 'm' or next == 'n' or next == 'o'\
-				 or next == 'p' or next == 'q' or next == 'r'\
-				 or next == 's' or next == 't' or next == 'u'\
-				 or next == 'v' or next == 'w' or next == 'x'\
-				 or next == 'y' or next == 'z'\
-				 or next == 'A' or next == 'B' or next == 'C'\
-				 or next == 'D' or next == 'E' or next == 'F'\
-				 or next == 'G' or next == 'H' or next == 'I'\
-				 or next == 'J' or next == 'K' or next == 'L'\
-				 or next == 'M' or next == 'N' or next == 'O'\
-				 or next == 'P' or next == 'Q' or next == 'R'\
-				 or next == 'S' or next == 'T' or next == 'U'\
-				 or next == 'V' or next == 'W' or next == 't'\
-				 or next == 'Y' or next == 'Z':
+				next = self.nextCh(inputStr, pos)
+				if next in string.letters:
 					pos += 1
-					temp = string[pos]
-					while temp == 'a' or temp == 'b' or temp == 'c'\
-					or temp == 'd' or temp == 'e' or temp == 'f'\
-					or temp == 'g' or temp == 'h' or temp == 'i'\
-					or temp == 'j' or temp == 'k' or temp == 'l'\
-					or temp == 'm' or temp == 'n' or temp == 'o'\
-					or temp == 'p' or temp == 'q' or temp == 'r'\
-					or temp == 's' or temp == 't' or temp == 'u'\
-					or temp == 'v' or temp == 'w' or temp == 'x'\
-					or temp == 'y' or temp == 'z'\
-					or temp == 'A' or temp == 'B' or temp == 'C'\
-					or temp == 'D' or temp == 'E' or temp == 'F'\
-					or temp == 'G' or temp == 'H' or temp == 'I'\
-					or temp == 'J' or temp == 'K' or temp == 'L'\
-					or temp == 'M' or temp == 'N' or temp == 'O'\
-					or temp == 'P' or temp == 'Q' or temp == 'R'\
-					or temp == 'S' or temp == 'T' or temp == 'U'\
-					or temp == 'V' or temp == 'W' or temp == 't'\
-					or temp == 'Y' or temp == 'Z' and pos<len(string):
+					temp = inputStr[pos]
+					while temp in string.letters and pos<len(inputStr):
 						x += temp
 						pos += 1
-						if (pos < len(string)):
-							temp = string[pos]
+						if (pos < len(inputStr)):
+							temp = inputStr[pos]
 						else:
 							break
 					pos -= 1
