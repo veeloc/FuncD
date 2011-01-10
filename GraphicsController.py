@@ -62,7 +62,7 @@ class graphicscontroller():
 		self.a = self.a + amount
 	#	if (self.a > 360): self.a = 360 - self.a
 		
-	def turn_l(self, amount):
+	def turnl(self, amount):
 		amount = int(amount)
 		self.a = self.a - amount
 	#	if (self.a < 0): self.a = 360 - math.fabs(self.a)

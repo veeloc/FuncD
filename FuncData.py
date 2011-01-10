@@ -11,7 +11,7 @@ class funcdata():
 		self.systemFunctions.append(('move','T_NUM'))
 		self.systemFunctions.append(('moved','T_STR','T_NUM'))
 		self.systemFunctions.append(('turn','T_NUM'))
-		self.systemFunctions.append(('turn_l','T_NUM'))
+		self.systemFunctions.append(('turnl','T_NUM'))
 		self.systemFunctions.append(('random',))
 		self.systemFunctions.append(('randomd','T_NUM'))
 		self.systemFunctions.append(('penUp',))
